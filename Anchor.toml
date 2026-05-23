@@ -1,23 +1,41 @@
+[toolchain]
+
+[features]
+seeds = false
+skip-lint = false
+
+[programs.localnet]
+drift = "MqL7XE1SYHin4i5yr2csyQGVcmcfCKXpzMZRk3BsJp4"
+pyth = "JBdG99T7G1BkzwSPpB8AqfRLkiRweoWeRFCtpgQ4qvQ"
+token_faucet = "BMkphy4BGXHkT8ftaTvFmzxQgCg4i6CmUZ7LnHpGW3hb"
+
+[registry]
+url = "https://api.apr.dev"
+
 [provider]
-cluster = "localnet"
-wallet = "~/.config/solana/id.json"
+cluster = "http://localhost:8899"
+wallet = "/Users/gopalk/.config/solana/id.json"
 
 [workspace]
 exclude = ["programs/openbook_v2"]
 
 [scripts]
-# to run local validator tests, use "./test-scripts/run-ts-mocha" in "test"
-test = "echo" # need to call anchor test to update metadata field in idl before running tests, so just do a noop
+fulltest = "cargo test && bash ./test-scripts/run-anchor-tests.sh"
 lint = "yarn prettify:fix && cargo fmt"
-fulltest = 'cargo test && bash ./test-scripts/run-anchor-tests.sh'
-watch_ts = 'find ./programs/clearing_house/src/* ./tests ./sdk/src | entr -c bash ./test-scripts/single-anchor-test.sh'
-watch_build = 'find ./programs/clearing_house/src/* ./tests ./sdk/src | entr -c anchor build'
-watch_cargo = 'find ./programs/clearing_house/src/* ./tests ./sdk/src | entr -c cargo test -- --show-output'
+test = "echo"
+watch_build = "find ./programs/clearing_house/src/* ./tests ./sdk/src | entr -c anchor build"
+watch_cargo = "find ./programs/clearing_house/src/* ./tests ./sdk/src | entr -c cargo test -- --show-output"
+watch_ts = "find ./programs/clearing_house/src/* ./tests ./sdk/src | entr -c bash ./test-scripts/single-anchor-test.sh"
 
-[programs.localnet]
-drift = "dRiftyHA39MWEi3m9aunc5MzRF1JYuBsbn6VPcn33UH"
-pyth = "FsJ3A3u2vn5cTVofAjvy6y5kwABJAqYWpe4975bi2epH"
-token_faucet = "V4v1mQiAdLz4qwckEb45WqHYceYizoib39cDBHSWfaB"
+[test]
+startup_wait = 5000
+shutdown_wait = 2000
+upgradeable = false
+
+[test.validator]
+bind_address = "0.0.0.0"
+ledger = ".anchor/test-ledger"
+rpc_port = 8899
 
 [[test.validator.account]]
 address = "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"

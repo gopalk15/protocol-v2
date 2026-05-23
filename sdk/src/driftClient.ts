@@ -207,7 +207,7 @@ import { getOracleId } from './oracles/oracleId';
 import { SignedMsgOrderParams } from './types';
 import { TakerInfo } from './types';
 // BN is already imported globally in this file via other imports
-import { sha256 } from '@noble/hashes/sha256';
+import { createHash } from 'crypto';
 import { getOracleConfidenceFromMMOracleData } from './oracles/utils';
 import { ConstituentMap } from './constituentMap/constituentMap';
 import { hasBuilder } from './math/orders';
@@ -7908,7 +7908,10 @@ export class DriftClient {
 		const anchorIxName = delegateSigner
 			? 'global' + ':' + 'SignedMsgOrderParamsDelegateMessage'
 			: 'global' + ':' + 'SignedMsgOrderParamsMessage';
-		const prefix = Buffer.from(sha256(anchorIxName).slice(0, 8));
+		const prefix = createHash('sha256')
+			.update(anchorIxName)
+			.digest()
+			.slice(0, 8);
 
 		// Backwards-compat: normalize optional builder fields to null for encoding
 		const withBuilderDefaults = {

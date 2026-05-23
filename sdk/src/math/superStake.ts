@@ -321,7 +321,7 @@ export async function fetchJitoSolMetrics() {
 		}
 	);
 
-	const data: JITO_SOL_METRICS_ENDPOINT_RESPONSE = await res.json();
+	const data: any = await res.json();
 
 	return data;
 }
@@ -379,7 +379,7 @@ export type MSOL_METRICS_ENDPOINT_RESPONSE = {
 
 export const fetchMSolMetrics = async () => {
 	const res = await fetch('https://api2.marinade.finance/metrics_json');
-	const data: MSOL_METRICS_ENDPOINT_RESPONSE = await res.json();
+	const data: any = await res.json();
 	return data;
 };
 
@@ -443,7 +443,7 @@ export async function calculateSolEarned({
 		const response = await fetch(url);
 		if (response.status === 200) {
 			const data = await response.json();
-			lstRatios.set(timestamp, data);
+			lstRatios.set(timestamp, data as any);
 		}
 	};
 

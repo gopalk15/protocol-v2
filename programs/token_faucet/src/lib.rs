@@ -2,7 +2,7 @@ use anchor_lang::prelude::*;
 use anchor_spl::token::{self, Mint, Token, TokenAccount};
 
 #[cfg(feature = "mainnet-beta")]
-declare_id!("AmNeSW4UMPFBodCjEJD22G3kA8EraUGkhxr3GmdyEF4f");
+declare_id!("BMkphy4BGXHkT8ftaTvFmzxQgCg4i6CmUZ7LnHpGW3hb");
 #[cfg(not(feature = "mainnet-beta"))]
 declare_id!("V4v1mQiAdLz4qwckEb45WqHYceYizoib39cDBHSWfaB");
 

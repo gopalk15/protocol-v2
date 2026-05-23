@@ -5,7 +5,7 @@ use anchor_lang::AnchorDeserialize;
 use solana_program::pubkey::Pubkey;
 
 #[cfg(feature = "mainnet-beta")]
-declare_id!("SBondMDrcV3K4kxZR1HNVT7osZxAHVHgYXL5Ze1oMUv");
+declare_id!("3674grdrAoBiEegDWw6WaKw2ZoL3qWt2V2YqesU2ZxS7");
 #[cfg(not(feature = "mainnet-beta"))]
 declare_id!("Aio4gaXjXzJNVLtzwtNVmSqGKpANtXhybbkhtAC94ji2");
 

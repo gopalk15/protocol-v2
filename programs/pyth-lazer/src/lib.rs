@@ -2,7 +2,7 @@
 
 use anchor_lang::prelude::*;
 
-declare_id!("pytd2yyk641x7ak7mkaasSJVXh6YYZnC7wTmtgAyxPt");
+declare_id!("CUZgWm6cWeXfe1fnN6WdnXw764uFXFehj61mqsKy8GT1");
 
 #[program]
 pub mod pyth_lazer {}

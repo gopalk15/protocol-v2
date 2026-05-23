@@ -48,7 +48,7 @@ export async function fetchHeliusPriorityFee(
 				],
 			}),
 		});
-		return await response.json();
+		return (await response.json()) as HeliusPriorityFeeResponse;
 	} catch (err) {
 		console.error(err);
 	}

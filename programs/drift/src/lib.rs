@@ -62,7 +62,7 @@ pub fn program_entry<'info>(
 }
 
 #[cfg(feature = "mainnet-beta")]
-declare_id!("dRiftyHA39MWEi3m9aunc5MzRF1JYuBsbn6VPcn33UH");
+declare_id!("MqL7XE1SYHin4i5yr2csyQGVcmcfCKXpzMZRk3BsJp4");
 #[cfg(not(feature = "mainnet-beta"))]
 declare_id!("dRiftyHA39MWEi3m9aunc5MzRF1JYuBsbn6VPcn33UH");
 

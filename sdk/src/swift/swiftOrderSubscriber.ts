@@ -20,8 +20,7 @@ import { Keypair, PublicKey, TransactionInstruction } from '@solana/web3.js';
 import nacl from 'tweetnacl';
 import { decodeUTF8 } from 'tweetnacl-util';
 import WebSocket from 'ws';
-import { sha256 } from '@noble/hashes/sha256';
-
+import { createHash } from 'node:crypto';
 // In practice, this for now is just an OrderSubscriber or a UserMap
 export interface AccountGetter {
 	mustGetUserAccount(publicKey: string): Promise<UserAccount>;
@@ -192,15 +191,16 @@ export class SwiftOrderSubscriber {
 						order.order_message,
 						'hex'
 					);
+
+					const delegateMessageHash = createHash('sha256')
+						.update('global:SignedMsgOrderParamsDelegateMessage')
+						.digest()
+						.slice(0, 8);
+
 					const isDelegateSigner = signedMsgOrderParamsBuf
 						.slice(0, 8)
-						.equals(
-							Uint8Array.from(
-								Buffer.from(
-									sha256('global' + ':' + 'SignedMsgOrderParamsDelegateMessage')
-								).slice(0, 8)
-							)
-						);
+						.equals(delegateMessageHash);
+
 					const signedMessage =
 						this.driftClient.decodeSignedMsgOrderParamsMessage(
 							signedMsgOrderParamsBuf,
@@ -273,11 +273,10 @@ export class SwiftOrderSubscriber {
 		const isDelegateSigner = signedMsgOrderParamsBuf
 			.slice(0, 8)
 			.equals(
-				Uint8Array.from(
-					Buffer.from(
-						sha256('global' + ':' + 'SignedMsgOrderParamsDelegateMessage')
-					).slice(0, 8)
-				)
+				createHash('sha256')
+					.update('global:SignedMsgOrderParamsDelegateMessage')
+					.digest()
+					.slice(0, 8)
 			);
 		const signedMessage = this.driftClient.decodeSignedMsgOrderParamsMessage(
 			signedMsgOrderParamsBuf,

@@ -29,7 +29,7 @@ export async function fetchDriftPriorityFee(
 		if (!response.ok) {
 			throw new Error(`HTTP error! status: ${response.status}`);
 		}
-		return await response.json();
+		return (await response.json()) as DriftPriorityFeeLevels[];
 	} catch (err) {
 		if (err instanceof Error) {
 			console.error('Error fetching priority fees:', err.message);

@@ -46,7 +46,7 @@ function deserializeRedBlackTree<Key, Value>(
 
 	for (const [index, [key, value]] of nodes.entries()) {
 		if (!freeNodes.has(index)) {
-			tree.set(key, value);
+			tree.set(key as any, value);
 		}
 	}
 
@@ -163,26 +163,30 @@ export const fastDecode = (buffer: Buffer): MarketData => {
 	);
 
 	const bids = [...bidsUnsorted].sort((a, b) => {
+		const orderA = a[0] as OrderId;
+		const orderB = b[0] as OrderId;
 		const priceComparison = sign(
-			toBN(b[0].priceInTicks).sub(toBN(a[0].priceInTicks))
+			toBN(orderB.priceInTicks).sub(toBN(orderA.priceInTicks))
 		);
 		if (priceComparison !== 0) {
 			return priceComparison;
 		}
 		return sign(
-			getUiOrderSequenceNumber(a[0]).sub(getUiOrderSequenceNumber(b[0]))
+			getUiOrderSequenceNumber(orderA).sub(getUiOrderSequenceNumber(orderB))
 		);
 	});
 
 	const asks = [...asksUnsorted].sort((a, b) => {
+		const orderA = a[0] as OrderId;
+		const orderB = b[0] as OrderId;
 		const priceComparison = sign(
-			toBN(a[0].priceInTicks).sub(toBN(b[0].priceInTicks))
+			toBN(orderA.priceInTicks).sub(toBN(orderB.priceInTicks))
 		);
 		if (priceComparison !== 0) {
 			return priceComparison;
 		}
 		return sign(
-			getUiOrderSequenceNumber(a[0]).sub(getUiOrderSequenceNumber(b[0]))
+			getUiOrderSequenceNumber(orderA).sub(getUiOrderSequenceNumber(orderB))
 		);
 	});
 

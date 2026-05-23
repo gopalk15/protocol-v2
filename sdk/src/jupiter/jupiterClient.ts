@@ -330,7 +330,7 @@ export class JupiterClient {
 		const quote = await (
 			await fetch(
 				`${this.url}${apiVersionParam}/quote?${params.toString()}`,
-				fetchOptions
+				fetchOptions as any
 			)
 		).json();
 		return quote as QuoteResponse;
@@ -359,7 +359,7 @@ export class JupiterClient {
 			this.url === RECOMMENDED_JUPITER_API || this.url === LEGACY_JUPITER_API
 				? RECOMMENDED_JUPITER_API_VERSION
 				: '';
-		const resp = await (
+		const resp = (await (
 			await fetch(`${this.url}${apiVersionParam}/swap`, {
 				method: 'POST',
 				headers: this.getHeaders('application/json'),
@@ -369,7 +369,7 @@ export class JupiterClient {
 					slippageBps,
 				}),
 			})
-		).json();
+		).json()) as any;
 		if (!('swapTransaction' in resp)) {
 			throw new Error(
 				`swapTransaction not found, error from Jupiter: ${resp.error} ${
